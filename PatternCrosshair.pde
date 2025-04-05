@@ -12,8 +12,8 @@ class PatternCrosshair extends SuperPatternGrid {
   
   
   // constructor
-  PatternCrosshair( float margin, int cells, float lWeight, color bColor, color hlColor ) {
-    super( margin, PatternLineType.CROSSHATCH, cells, lWeight );
+  PatternCrosshair( int sWidth, int sHeight, float margin, int cells, float lWeight, color bColor, color hlColor ) {
+    super( sWidth, sHeight, margin, PatternLineType.CROSSHATCH, cells, lWeight );
     
     this.lineWeight = lWeight;
     this.baseColor = bColor;
@@ -29,9 +29,9 @@ class PatternCrosshair extends SuperPatternGrid {
     // edge grids
     float barSize = cellSize * 1/3;
     float left = marginOffset;
-    float right = width - marginOffset - barSize;
+    float right = simulatedWidth - marginOffset - barSize;
     float top = marginOffset;
-    float bottom = height - marginOffset - barSize;
+    float bottom = simulatedHeight - marginOffset - barSize;
     GraphicDashedBar topBar = new GraphicDashedBar( this, baseColor, lineWeight, left, top, croppedWidth, barSize, ceil( horizCells ) );
     graphicElements.add( topBar );
     GraphicDashedBar bottomBar = new GraphicDashedBar( this, baseColor, lineWeight, left, bottom, croppedWidth, barSize, ceil( horizCells ) );
@@ -43,9 +43,9 @@ class PatternCrosshair extends SuperPatternGrid {
     
     
     // rings
-    float startX = width / 2;
-    float startY = height / 2;
-    float ringSize = croppedHeight * 0.75;
+    float startX = simulatedWidth / 2;
+    float startY = simulatedHeight / 2;
+    float ringSize = croppedHeight * 0.65;
     //GraphicCirc centerRing = new GraphicCirc( this, highlightColor, lineWeight, startX, startY, ringSize, false );
     GraphicRect centerRing = new GraphicRect( this, highlightColor, 0, startX, startY, ringSize, ringSize, false, true, 0.1, lineWeight );
     centerRing.tweenSequenceRatio = 0.2;
@@ -59,10 +59,10 @@ class PatternCrosshair extends SuperPatternGrid {
     centCrosshair.tweenSequenceRatio = 0.9;
     graphicElements.add( centCrosshair );
     
+    // corner markers
     crossRatio = 0.5;
     ringSize = croppedHeight * 0.15;
-    float ringRot = PI / 4;
-    float circOffset = croppedHeight / 5;
+    float circOffset = croppedHeight / 6;
     startX = marginOffset + circOffset;
     startY = marginOffset + circOffset;
     GraphicCrosshair tlCrosshair = new GraphicCrosshair( this, baseColor, baseColor, lineWeight, startX, startY, ringSize, TargetShape.NONE, crossRatio, true );
@@ -90,7 +90,7 @@ class PatternCrosshair extends SuperPatternGrid {
     float rulerWidth = ( ( croppedWidth - ( barSize * 2 ) ) - rulerKnockout ) / 2;
     float rulerHeight = ( ( croppedHeight - ( barSize * 2 ) ) - rulerKnockout ) / 2;
     startX = marginOffset + barSize;
-    startY = ( height / 2 ) - ( rulerDepth / 2 );
+    startY = ( simulatedHeight / 2 ) - ( rulerDepth / 2 );
     GraphicRuledLine hRuleLeft = new GraphicRuledLine( this, lineWeight, baseColor, startX, startY, rulerWidth, rulerDepth, ceil( ( horizCells - knockoutCells ) / 2 ), 5, 1 );
     hRuleLeft.tweenSequenceRatio = 0.5;
     graphicElements.add( hRuleLeft );
@@ -100,7 +100,7 @@ class PatternCrosshair extends SuperPatternGrid {
     hRuleRight.tweenSequenceRatio = 0.6;
     graphicElements.add( hRuleRight );
     
-    startX = ( width / 2 ) - ( rulerDepth / 2 ); 
+    startX = ( simulatedWidth / 2 ) - ( rulerDepth / 2 ); 
     startY = marginOffset + barSize;
     GraphicRuledLine vRuleTop = new GraphicRuledLine( this, lineWeight, baseColor, startX, startY, rulerDepth, rulerHeight, ceil( ( vertCells - knockoutCells ) / 2 ), 5, 1 );
     vRuleTop.tweenSequenceRatio = 0.7;

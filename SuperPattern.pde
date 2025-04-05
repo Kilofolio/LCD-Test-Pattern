@@ -6,6 +6,8 @@
 class SuperPattern {
   
   // settings
+  int simulatedWidth;
+  int simulatedHeight;
   int marginOffset;
   int croppedWidth;
   int croppedHeight;
@@ -28,12 +30,16 @@ class SuperPattern {
   
   
   // constructor
-  SuperPattern( float margin ) {
-    this.marginOffset = round( margin * width );
-    this.croppedWidth = width - (marginOffset * 2);
-    this.croppedHeight = height - (marginOffset * 2);
+  SuperPattern( int sWidth, int sHeight, float margin ) {
+    this.simulatedWidth = sWidth;
+    this.simulatedHeight = sHeight;
+    this.marginOffset = round( margin * float( simulatedWidth ) );
+    this.croppedWidth = simulatedWidth - (marginOffset * 2);
+    this.croppedHeight = simulatedHeight - (marginOffset * 2);
     
     graphicElements = new ArrayList<SuperGraphicElement>();
+    
+    println( "SuperPattern() :: simulatedWidth:" + simulatedWidth + ", simulatedHeight:" + simulatedHeight + ", marginOffset:" + marginOffset + ", croppedWidth:" + croppedWidth + ", croppedHeight:" + croppedHeight );
   }
   
   void setGraphicDelays() {
@@ -131,8 +137,8 @@ class SuperPatternGrid extends SuperPattern {
   
   
   // constructor
-  SuperPatternGrid( float margin, int pType, int cells, float lWeight ) {
-    super( margin );
+  SuperPatternGrid( int sWidth, int sHeight, float margin, int pType, int cells, float lWeight ) {
+    super( sWidth, sHeight, margin );
     
     marginOffset += lWeight / 2;
     croppedWidth -= lWeight;

@@ -13,8 +13,8 @@ class PatternDotGrid extends SuperPatternGrid {
   
   
   // constructor
-  PatternDotGrid( float margin, int cells, float lWeight, float dSize, color bColor, color hlColor ) {
-    super( margin, PatternLineType.CROSSHATCH, cells, lWeight );
+  PatternDotGrid( int sWidth, int sHeight, float margin, int cells, float lWeight, float dSize, color bColor, color hlColor ) {
+    super( sWidth, sHeight, margin, PatternLineType.CROSSHATCH, cells, lWeight );
     
     this.lineWeight = lWeight;
     this.dotSize = dSize;

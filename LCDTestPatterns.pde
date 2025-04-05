@@ -21,6 +21,12 @@ final float margin = 0; //0.05;
 int activePatternIndex = 1;
 float standardShowDelay = 0.65;
 boolean doShowScanlines = false;
+boolean doSimulateSize = false;
+
+int simulatedWidth;
+int simulatedHeight;
+float scaleX = 1;
+float scaleY = 1;
 
 // auto timer
 float timerBarHeight = 0;
@@ -31,16 +37,25 @@ boolean autoMode = false;
 
 // Setup
 void setup() {
-  //size( 1600, 900 );
   size( 1920, 1080 );
   //fullScreen();
   
+  if( doSimulateSize ) {
+    simulatedWidth = 1440;
+    simulatedHeight = 1080;
+    scaleX = width / float( simulatedWidth );
+    scaleY = height / float( simulatedHeight );
+  } else {
+    simulatedWidth = width;
+    simulatedHeight = height;
+  }
+  
   // animation
   Ani.init(this);
-  timerBarHeight = floor( height / 250 );
+  timerBarHeight = floor( simulatedHeight / 250 );
   
   // fonts
-  fontSize = ceil( height / 55 );
+  fontSize = ceil( simulatedHeight / 55 );
   hackRegular = createFont( "fonts/Hack-Regular.ttf", fontSize );
   hackBold = createFont( "fonts/Hack-Bold.ttf", fontSize );
   
@@ -49,25 +64,25 @@ void setup() {
   strokeJoin( MITER );
   
   // graphics
-  titleCard = new TitleCard( margin, this, hackRegular, highlightColor, bgColor );
+  titleCard = new TitleCard( simulatedWidth, simulatedHeight, margin, this, hackRegular, highlightColor, bgColor );
   
   patterns = new ArrayList<SuperPattern>();
-  float dotSize = ceil( height / 150 ); //4;
-  float lineWeight = ceil( height / 400 ); //2;
+  float dotSize = ceil( simulatedHeight / 150 ); //4;
+  float lineWeight = ceil( simulatedHeight / 400 ); //2;
   
   // color bars
   //patterns.add( new PatternColorSMPTE( margin ) );
-  patterns.add( new PatternColorLabeled( margin, hackBold, fontSize, lineWeight ) );
-  patterns.add( new PatternGraysacle( margin, hackBold, fontSize, lineWeight ) );
+  patterns.add( new PatternColorLabeled( simulatedWidth, simulatedHeight, margin, hackBold, fontSize, lineWeight ) );
+  patterns.add( new PatternGraysacle( simulatedWidth, simulatedHeight, margin, hackBold, fontSize, lineWeight ) );
   
   // grid
-  patterns.add( new PatternDotGrid( margin, 9, lineWeight, dotSize, fgColor, highlightColor ) );
+  patterns.add( new PatternDotGrid( simulatedWidth, simulatedHeight, margin, 9, lineWeight, dotSize, fgColor, highlightColor ) );
   
   // crosshair
-  patterns.add( new PatternCrosshair( margin, 27, lineWeight, fgColor, highlightColor ) );
+  patterns.add( new PatternCrosshair( simulatedWidth, simulatedHeight, margin, 27, lineWeight, fgColor, highlightColor ) );
   
   // hex
-  patterns.add( new PatternHex( margin, 27, lineWeight, fgColor, highlightColor, hackRegular, hackBold, fontSize ) );
+  patterns.add( new PatternHex( simulatedWidth, simulatedHeight, margin, 27, lineWeight, fgColor, highlightColor, hackRegular, hackBold, fontSize ) );
   
   
   // SCANLINES
@@ -79,6 +94,11 @@ void setup() {
 // Draw logic
 void draw() {
   background( bgColor );
+  
+  if( doSimulateSize ) {
+    pushMatrix();
+    scale( scaleX, scaleY );
+  }
   
   if( hasBegun ) {
     // draw current pattern
@@ -113,6 +133,10 @@ void draw() {
   // scanlines
   if( doShowScanlines ) {
     scanlines.draw();
+  }
+  
+  if( doSimulateSize ) {
+    popMatrix();
   }
 }
 
