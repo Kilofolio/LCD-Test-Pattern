@@ -28,6 +28,9 @@ int simulatedHeight;
 float scaleX = 1;
 float scaleY = 1;
 
+// graphics
+PGraphics canvas;
+
 // auto timer
 float timerBarHeight = 0;
 int autoDuration = 4000;
@@ -50,6 +53,8 @@ void setup() {
     simulatedHeight = height;
   }
   
+  canvas = createGraphics( simulatedWidth, simulatedHeight );
+  
   // animation
   Ani.init(this);
   timerBarHeight = floor( simulatedHeight / 250 );
@@ -64,7 +69,7 @@ void setup() {
   strokeJoin( MITER );
   
   // graphics
-  titleCard = new TitleCard( simulatedWidth, simulatedHeight, margin, this, hackRegular, highlightColor, bgColor );
+  titleCard = new TitleCard( canvas, simulatedWidth, simulatedHeight, margin, this, hackRegular, highlightColor, bgColor );
   
   patterns = new ArrayList<SuperPattern>();
   float dotSize = ceil( simulatedHeight / 150 ); //4;
@@ -72,17 +77,17 @@ void setup() {
   
   // color bars
   //patterns.add( new PatternColorSMPTE( margin ) );
-  patterns.add( new PatternColorLabeled( simulatedWidth, simulatedHeight, margin, hackBold, fontSize, lineWeight ) );
-  patterns.add( new PatternGraysacle( simulatedWidth, simulatedHeight, margin, hackBold, fontSize, lineWeight ) );
+  patterns.add( new PatternColorLabeled( canvas, simulatedWidth, simulatedHeight, margin, hackBold, fontSize, lineWeight ) );
+  patterns.add( new PatternGraysacle( canvas, simulatedWidth, simulatedHeight, margin, hackBold, fontSize, lineWeight ) );
   
   // grid
-  patterns.add( new PatternDotGrid( simulatedWidth, simulatedHeight, margin, 9, lineWeight, dotSize, fgColor, highlightColor ) );
+  patterns.add( new PatternDotGrid( canvas, simulatedWidth, simulatedHeight, margin, 9, lineWeight, dotSize, fgColor, highlightColor ) );
   
   // crosshair
-  patterns.add( new PatternCrosshair( simulatedWidth, simulatedHeight, margin, 27, lineWeight, fgColor, highlightColor ) );
+  patterns.add( new PatternCrosshair( canvas, simulatedWidth, simulatedHeight, margin, 27, lineWeight, fgColor, highlightColor ) );
   
   // hex
-  patterns.add( new PatternHex( simulatedWidth, simulatedHeight, margin, 27, lineWeight, fgColor, highlightColor, hackRegular, hackBold, fontSize ) );
+  patterns.add( new PatternHex( canvas, simulatedWidth, simulatedHeight, margin, 27, lineWeight, fgColor, highlightColor, hackRegular, hackBold, fontSize ) );
   
   
   // SCANLINES
@@ -95,45 +100,44 @@ void setup() {
 void draw() {
   background( bgColor );
   
+  canvas.beginDraw();
+  
+    if( hasBegun ) {
+      // draw current pattern
+      for( int i = 0; i < patterns.size(); i++ ) {
+        SuperPattern thisPattern = patterns.get(i);
+        if( thisPattern.isActive ) {
+          thisPattern.draw();
+        }
+      }
+      
+      // auto mode
+      if( autoMode ) {
+        // timer logic
+        autoTimer.draw();
+        if( autoTimer.progress() >= 1 ) {
+          onAutoTimerComplete();
+        }
+      }
+    }
+    
+    if( titleCard.isActive ) {
+      titleCard.draw();
+    }
+    
+    // scanlines
+    if( doShowScanlines ) {
+      scanlines.draw();
+    }
+    
+  canvas.endDraw();
+  
   if( doSimulateSize ) {
     pushMatrix();
     scale( scaleX, scaleY );
   }
   
-  if( hasBegun ) {
-    // draw current pattern
-    for( int i = 0; i < patterns.size(); i++ ) {
-      SuperPattern thisPattern = patterns.get(i);
-      if( thisPattern.isActive ) {
-        thisPattern.draw();
-      }
-    }
-    
-    // auto mode
-    if( autoMode ) {
-      
-      // draw timer bar    
-      //noStroke();
-      //fill( fgColor );
-      //rect( 0, height - timerBarHeight, width * autoTimer.progress(), timerBarHeight );
-      //noFill();
-      
-      // timer logic
-      autoTimer.draw();
-      if( autoTimer.progress() >= 1 ) {
-        onAutoTimerComplete();
-      }
-    }
-  }
-  
-  if( titleCard.isActive ) {
-    titleCard.draw();
-  }
-  
-  // scanlines
-  if( doShowScanlines ) {
-    scanlines.draw();
-  }
+  image( canvas, simulatedWidth, simulatedHeight );
   
   if( doSimulateSize ) {
     popMatrix();

@@ -6,8 +6,10 @@
 class SuperPattern {
   
   // settings
-  int simulatedWidth;
-  int simulatedHeight;
+  int graphicsWidth;
+  int graphicsHeight;
+  PGraphics canvas;
+  
   int marginOffset;
   int croppedWidth;
   int croppedHeight;
@@ -30,12 +32,13 @@ class SuperPattern {
   
   
   // constructor
-  SuperPattern( int sWidth, int sHeight, float margin ) {
-    this.simulatedWidth = sWidth;
-    this.simulatedHeight = sHeight;
-    this.marginOffset = round( margin * float( simulatedWidth ) );
-    this.croppedWidth = simulatedWidth - (marginOffset * 2);
-    this.croppedHeight = simulatedHeight - (marginOffset * 2);
+  SuperPattern( PGraphics pg, int gWidth, int gHeight, float margin ) {
+    this.canvas = pg;
+    this.graphicsWidth = gWidth;
+    this.graphicsHeight = gHeight;
+    this.marginOffset = round( margin * float( graphicsWidth ) );
+    this.croppedWidth = graphicsWidth - (marginOffset * 2);
+    this.croppedHeight = graphicsHeight - (marginOffset * 2);
     
     graphicElements = new ArrayList<SuperGraphicElement>();
     
@@ -137,8 +140,8 @@ class SuperPatternGrid extends SuperPattern {
   
   
   // constructor
-  SuperPatternGrid( int sWidth, int sHeight, float margin, int pType, int cells, float lWeight ) {
-    super( sWidth, sHeight, margin );
+  SuperPatternGrid( PGraphics pg, int sWidth, int sHeight, float margin, int pType, int cells, float lWeight ) {
+    super( pg, sWidth, sHeight, margin );
     
     marginOffset += lWeight / 2;
     croppedWidth -= lWeight;

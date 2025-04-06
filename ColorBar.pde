@@ -54,14 +54,12 @@ class ColorBar extends SuperGraphicElement {
   
   
   // draw logic
-  void draw() {
-    //println( "ColorBar: draw() :: currentAlpha: " + currentAlpha );
-    
-    noStroke();
+  void draw() {    
+    canvas.noStroke();
     color barColorWithAlpha = color( red( finalBarColor ), green( finalBarColor ), blue( finalBarColor ), currentAlpha );
-    fill( barColorWithAlpha );
-    rect( currentPosX, currentPosY, currentWidth, currentHeight );
-    noFill();
+    canvas.fill( barColorWithAlpha );
+    canvas.rect( currentPosX, currentPosY, currentWidth, currentHeight );
+    canvas.noFill();
     
   }
   
@@ -155,27 +153,25 @@ class ColorBarLabel extends SuperGraphicElement {
   }
   
   // draw logic
-  void draw() {
-    //println( "ColorBar: draw() :: currentAlpha: " + currentAlpha );
-    
-    noStroke();
+  void draw() {    
+    canvas.noStroke();
     
     //color barColor = barData.barColor;
     //color barColorWithAlpha = color( red( barColor ), green( barColor ), blue( barColor ), currentAlpha );
     //fill( barColorWithAlpha );
-    shape( barShape, currentPosX, currentPosY, currentWidth, currentHeight );
+    canvas.shape( barShape, currentPosX, currentPosY, currentWidth, currentHeight );
     
-    textFont( barData.font );
-    textSize( barData.fontSize );
-    textAlign( CENTER, CENTER );
+    canvas.textFont( barData.font );
+    canvas.textSize( barData.fontSize );
+    canvas.textAlign( CENTER, CENTER );
     
     color textColor = barData.textColor;
     color textWithAlpha = color( red( textColor ), green( textColor ), blue( textColor ), currentAlpha );
-    fill( textWithAlpha );
+    canvas.fill( textWithAlpha );
     pushMatrix();
     translate( textX, textY );
     rotate( -HALF_PI );
-    text( barData.labelText, 0, 0 );
+    canvas.text( barData.labelText, 0, 0 );
     popMatrix();
     
     noFill();

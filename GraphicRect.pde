@@ -138,24 +138,22 @@ class GraphicRect extends SuperGraphicElement {
   
   
   // draw logic
-  void draw() {
-    //println( "DotGraphic: draw() :: currentAlpha: " + currentAlpha );
-    
+  void draw() {    
     color colorWithAlpha = color( red( finalColor ), green( finalColor ), blue( finalColor ), currentAlpha );
     boolean doDrawBox = false;
     if( doFill ) {
-      noStroke();
-      fill( colorWithAlpha );
+      canvas.noStroke();
+      canvas.fill( colorWithAlpha );
       doDrawBox = true;
     } else if( boxStrokeWeight > 0 ) {
-      noFill();
-      stroke( colorWithAlpha );    
-      strokeWeight( boxStrokeWeight );
+      canvas.noFill();
+      canvas.stroke( colorWithAlpha );    
+      canvas.strokeWeight( boxStrokeWeight );
       doDrawBox = true;
     }
     
     if( doDrawBox ) {
-      rect( currentBoxStartX, currentBoxStartY, currentWidth, currentHeight );
+      canvas.rect( currentBoxStartX, currentBoxStartY, currentWidth, currentHeight );
     }
     
     if( doCorners ) {
@@ -166,12 +164,12 @@ class GraphicRect extends SuperGraphicElement {
       pushMatrix();
       translate( finalPosX, finalPosY );
       scale( currentScale );
-      shape( cornerShape );
+      canvas.shape( cornerShape );
       popMatrix();
     }
     
-    noFill();
-    noStroke();
+    canvas.noFill();
+    canvas.noStroke();
   }
   
   
@@ -256,9 +254,7 @@ class GraphicDashedBar extends SuperGraphicElement {
   
   
   // draw logic
-  void draw() {
-    //println( "DotGraphic: draw() :: currentAlpha: " + currentAlpha );
-    
+  void draw() {    
     color colorWithAlpha = color( red( finalColor ), green( finalColor ), blue( finalColor ), currentAlpha );
     float cellWidth = ( direction == Direction.HORIZONTAL ) ? finalWidth / float( divisions ) : finalWidth;
     float cellHeight = ( direction == Direction.VERTICAL ) ? finalHeight / float( divisions ) : finalHeight;
@@ -268,19 +264,19 @@ class GraphicDashedBar extends SuperGraphicElement {
     for( int i = 0; i < divisions; i++ ) {
       boolean doFill = ( i % 2 < 1 ) ? true : false;
       
-      stroke( colorWithAlpha );    
-      strokeWeight( finalStrokeWeight );
+      canvas.stroke( colorWithAlpha );    
+      canvas.strokeWeight( finalStrokeWeight );
       if( doFill ) {
-        fill( colorWithAlpha );
+        canvas.fill( colorWithAlpha );
       }
       
-      rect( cellX, cellY, cellWidth, cellHeight );
+      canvas.rect( cellX, cellY, cellWidth, cellHeight );
       
       cellX = ( direction == Direction.HORIZONTAL ) ? cellX + cellWidth : cellX;
       cellY = ( direction == Direction.VERTICAL ) ? cellY + cellHeight : cellY;
       
-      noFill();
-      noStroke();
+      canvas.noFill();
+      canvas.noStroke();
     }
   }
   
@@ -486,7 +482,7 @@ class CautionTape extends SuperGraphicElement {
     //if( direction == Direction.VERTICAL ) {
     //  rotate( -HALF_PI );
     //}
-    shape( shapeContainer );
+    canvas.shape( shapeContainer );
     popMatrix();
   }
   

@@ -9,16 +9,16 @@ class TitleCard extends SuperPattern {
   LCDTestPatterns mainController;
   
   
-  TitleCard( int sWidth, int sHeight, float margin, LCDTestPatterns main, PFont font1, color bgColor, color fgColor )  {
-    super( sWidth, sHeight, margin );
+  TitleCard( PGraphics pg, int sWidth, int sHeight, float margin, LCDTestPatterns main, PFont font1, color bgColor, color fgColor )  {
+    super( pg, sWidth, sHeight, margin );
     
     this.mainController = main;
     
     this.doInvertHideDealys = true;
     
     // background
-    float startX = simulatedWidth / 2;
-    float startY = simulatedHeight / 2;
+    float startX = graphicsWidth / 2;
+    float startY = graphicsHeight / 2;
     GraphicRect bg = new GraphicRect( this, bgColor, 0, startX, startY, croppedWidth, croppedHeight, true, false );
     bg.tweenSequenceRatio = 0;
     graphicElements.add( bg );
@@ -26,8 +26,8 @@ class TitleCard extends SuperPattern {
     // caution tape
     float cautionWidth = croppedWidth;
     float cautionHeight = croppedHeight / 16;
-    startX = simulatedWidth / 2;
-    startY = simulatedHeight - marginOffset - ( cautionHeight / 2 );
+    startX = graphicsWidth / 2;
+    startY = graphicsHeight - marginOffset - ( cautionHeight / 2 );
     float cautionWeight = cautionHeight;
     CautionTape cTapeBottom = new CautionTape( this, fgColor, cautionWeight, startX, startY, cautionWidth, cautionHeight, true, 1.5, 1 );
     cTapeBottom.tweenSequenceRatio = 0.5;
@@ -39,10 +39,10 @@ class TitleCard extends SuperPattern {
     graphicElements.add( cTapeTop );
     
     // text
-    float textSize1 = ceil( simulatedWidth / 16 );
-    float textSize2 = ceil( simulatedWidth / 32 );
-    startX = simulatedWidth / 2;
-    startY = simulatedHeight / 2 - ( textSize1 / 2 );
+    float textSize1 = ceil( graphicsWidth / 16 );
+    float textSize2 = ceil( graphicsWidth / 32 );
+    startX = graphicsWidth / 2;
+    startY = graphicsHeight / 2 - ( textSize1 / 2 );
     TextLabel label1 = new TextLabel( this, startX, startY, font1, textSize1, fgColor, "CALIBRATION PROCESS" );
     label1.tweenSequenceRatio = 0.85;
     graphicElements.add( label1 );

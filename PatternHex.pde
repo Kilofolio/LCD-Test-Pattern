@@ -11,8 +11,8 @@ class PatternHex extends SuperPatternGrid {
   
    
   // constructor
-  PatternHex( int sWidth, int sHeight, float margin, int cells, float lWeight, color bColor, color hlColor, PFont bFont, PFont hlFont, float tSize ) {
-    super( sWidth, sHeight, margin, PatternLineType.CROSSHATCH, cells, lWeight );
+  PatternHex( PGraphics pg, int sWidth, int sHeight, float margin, int cells, float lWeight, color bColor, color hlColor, PFont bFont, PFont hlFont, float tSize ) {
+    super( pg, sWidth, sHeight, margin, PatternLineType.CROSSHATCH, cells, lWeight );
     
     this.lineWeight = lWeight;
     this.baseColor = bColor;
@@ -30,8 +30,8 @@ class PatternHex extends SuperPatternGrid {
     // hex
     float radiusInc = 80;
     int totalShapes = floor( croppedHeight / radiusInc );
-    float centerX = simulatedWidth / 2;
-    float centerY = simulatedHeight / 2;
+    float centerX = graphicsWidth / 2;
+    float centerY = graphicsHeight / 2;
     float currentDiameter = croppedHeight;
     for( var i = 0; i < totalShapes; i++ ) {
       GraphicPolygon thisShape;
@@ -56,7 +56,7 @@ class PatternHex extends SuperPatternGrid {
     float chevDiameter = croppedHeight * 0.35;
     float chevInc = chevAreaWidth / chevCount;
     //float initInset = ( chevAreaWidth / 2 ) + ( ( chevInc * chevCount ) / 2 ) + ( chevDiameter / 2 );
-    float startX = simulatedWidth - marginOffset - ( chevDiameter / 2 );
+    float startX = graphicsWidth - marginOffset - ( chevDiameter / 2 );
     float startY = centerY;
     float initAngle = -chevAngle;
     for( var i = 0; i < chevCount; i++ ) {

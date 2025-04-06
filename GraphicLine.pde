@@ -50,17 +50,15 @@ class GraphicLine extends SuperGraphicElement {
   
   
   // draw logic
-  void draw() {
-    //println( "LineGraphic: draw() :: currentAlpha: " + currentAlpha );
-    
-    noFill();
+  void draw() {    
+    canvas.noFill();
     
     color colorWithAlpha = color( red( finalColor ), green( finalColor ), blue( finalColor ), currentAlpha );
-    stroke( colorWithAlpha );    
-    strokeWeight( finalStrokeWeight );
-    line( currentPosX, currentPosY, currentEndPosX, currentEndPosY );
+    canvas.stroke( colorWithAlpha );    
+    canvas.strokeWeight( finalStrokeWeight );
+    canvas.line( currentPosX, currentPosY, currentEndPosX, currentEndPosY );
     
-    noStroke(); 
+    canvas.noStroke(); 
   }
   
   
@@ -272,7 +270,7 @@ class Scanlines {
   
   // Event handlers
   void draw() {
-    shape( linesShape, 0, currentPosY );
+    canvas.shape( linesShape, 0, currentPosY );
   }
   
   void show() {

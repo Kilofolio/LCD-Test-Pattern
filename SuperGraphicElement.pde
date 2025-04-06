@@ -7,6 +7,7 @@ class SuperGraphicElement {
   
   // settings
   SuperPattern parentPattern;
+  PGraphics canvas;
   float finalPosX;
   float finalPosY;
   
@@ -27,6 +28,7 @@ class SuperGraphicElement {
   // constructor
   SuperGraphicElement( SuperPattern pPattern, float pX, float pY ) {
     this.parentPattern = pPattern;
+    this.canvas = parentPattern.canvas;
     this.finalPosX = this.currentPosX = pX;
     this.finalPosY = this.currentPosY = pY;
   }

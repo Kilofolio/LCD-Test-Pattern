@@ -158,34 +158,34 @@ class GraphicPolygon extends SuperGraphicElement {
     pushMatrix();
     translate( finalPosX, finalPosY );
     scale( currentScale );
-    shape( polygon );
+    canvas.shape( polygon );
     popMatrix();
     
     if( hasLabel ) {
-      noStroke();
-      fill( colorWithAlpha );
+      canvas.noStroke();
+      canvas.fill( colorWithAlpha );
       
-      textFont( font );
-      textSize( fontSize );
-      textAlign( CENTER, CENTER );
+      canvas.textFont( font );
+      canvas.textSize( fontSize );
+      canvas.textAlign( CENTER, CENTER );
       
       pushMatrix();
       translate( textX, textY );
       rotate( textRot );
-      text( labelText, 0, 0 );
+      canvas.text( labelText, 0, 0 );
       popMatrix();
     }
     
     if( doShowReg ) {
-      stroke( color( 0, 255, 0 ) );
-      strokeWeight( 2 );
+      canvas.stroke( color( 0, 255, 0 ) );
+      canvas.strokeWeight( 2 );
       float regSize = finalDiameter / 6;
-      line( currentPosX - regSize, currentPosY, currentPosX + regSize, currentPosY );
-      line( currentPosX, currentPosY - regSize, currentPosX, currentPosY + regSize );
+      canvas.line( currentPosX - regSize, currentPosY, currentPosX + regSize, currentPosY );
+      canvas.line( currentPosX, currentPosY - regSize, currentPosX, currentPosY + regSize );
     }
     
-    noStroke();
-    noFill();
+    canvas.noStroke();
+    canvas.noFill();
     
   }
   

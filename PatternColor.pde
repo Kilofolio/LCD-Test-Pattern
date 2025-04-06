@@ -41,8 +41,8 @@ class PatternColorSMPTE extends SuperPattern {
   
   
   // constructor
-  PatternColorSMPTE( int sWidth, int sHeight, float margin ) {
-    super( sWidth, sHeight, margin );
+  PatternColorSMPTE( PGraphics pg, int sWidth, int sHeight, float margin ) {
+    super( pg, sWidth, sHeight, margin );
     
     doRandomizeTweens = true;
     
@@ -135,8 +135,8 @@ class PatternColorLabeled extends SuperPattern {
   
   
   // constructor
-  PatternColorLabeled( int sWidth, int sHeight, float margin, PFont tFont, float tSize, float bGap ) {
-    super( sWidth, sHeight, margin );
+  PatternColorLabeled( PGraphics pg, int sWidth, int sHeight, float margin, PFont tFont, float tSize, float bGap ) {
+    super( pg, sWidth, sHeight, margin );
     
     this.font = tFont;
     this.fontSize = tSize;
@@ -229,8 +229,8 @@ class PatternGraysacle extends SuperPattern {
   };
     
   // constructor
-  PatternGraysacle( int sWidth, int sHeight, float margin, PFont tFont, float tSize, float bGap ) {
-    super( sWidth, sHeight, margin );
+  PatternGraysacle( PGraphics pg, int sWidth, int sHeight, float margin, PFont tFont, float tSize, float bGap ) {
+    super( pg, sWidth, sHeight, margin );
     
     this.font = tFont;
     this.fontSize = tSize;

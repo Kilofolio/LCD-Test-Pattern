@@ -30,23 +30,21 @@ class GraphicCirc extends SuperGraphicElement {
   
   
   // draw logic
-  void draw() {
-    //println( "DotGraphic: draw() :: currentAlpha: " + currentAlpha );
-    
+  void draw() {    
     color colorWithAlpha = color( red( finalColor ), green( finalColor ), blue( finalColor ), currentAlpha );
     if( doFill ) {
-      noStroke();
-      fill( colorWithAlpha );
+      canvas.noStroke();
+      canvas.fill( colorWithAlpha );
     } else {
-      noFill();
-      stroke( colorWithAlpha );    
-      strokeWeight( finalStrokeWeight );
+      canvas.noFill();
+      canvas.stroke( colorWithAlpha );    
+      canvas.strokeWeight( finalStrokeWeight );
     }
     
-    circle( currentPosX, currentPosY, currentDiameter );
+    canvas.circle( currentPosX, currentPosY, currentDiameter );
     
-    noFill(); 
-    noStroke();
+    canvas.noFill(); 
+    canvas.noStroke();
   }
   
   
