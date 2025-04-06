@@ -208,6 +208,9 @@ class Scanlines {
   // settings
   boolean doAnimate;
   
+  float lineHeightInterval;
+  float tweenTime;
+  
   // graphics
   PShape linesShape;
   
@@ -221,6 +224,9 @@ class Scanlines {
   // Constructor
   Scanlines( float lineHeightLight, float lineHeightDark, boolean doAnimate, float tweenTime ) {
     this.doAnimate = doAnimate;
+    this.tweenTime = tweenTime;
+    
+    lineHeightInterval = lineHeightLight + lineHeightDark;
     
     color lightColor = color( 255, 255, 255, 16 );
     color darkColor = color( 0, 0, 0, 36 );
@@ -257,7 +263,7 @@ class Scanlines {
     
     // animate
     if( doAnimate ) {
-      currentPosY = -( lineHeightLight + lineHeightDark);
+      currentPosY = -( lineHeightLight + lineHeightDark );
       loopAni = Ani.to( this, tweenTime, "currentPosY", 0, Ani.LINEAR );
       loopAni.repeat();
     }
@@ -268,5 +274,18 @@ class Scanlines {
   void draw() {
     shape( linesShape, 0, currentPosY );
   }
+  
+  void show() {
+    if( doAnimate ) {
+      currentPosY = -lineHeightInterval;
+      loopAni = Ani.to( this, tweenTime, "currentPosY", 0, Ani.LINEAR );
+      loopAni.repeat();
+    }
+  }
+  
+  void hide() {
+    loopAni.end();
+  }
+  
   
 }

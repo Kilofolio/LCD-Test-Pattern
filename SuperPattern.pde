@@ -39,7 +39,7 @@ class SuperPattern {
     
     graphicElements = new ArrayList<SuperGraphicElement>();
     
-    println( "SuperPattern() :: simulatedWidth:" + simulatedWidth + ", simulatedHeight:" + simulatedHeight + ", marginOffset:" + marginOffset + ", croppedWidth:" + croppedWidth + ", croppedHeight:" + croppedHeight );
+    //println( "SuperPattern() :: simulatedWidth:" + simulatedWidth + ", simulatedHeight:" + simulatedHeight + ", marginOffset:" + marginOffset + ", croppedWidth:" + croppedWidth + ", croppedHeight:" + croppedHeight );
   }
   
   void setGraphicDelays() {

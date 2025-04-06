@@ -29,12 +29,12 @@ class TitleCard extends SuperPattern {
     startX = simulatedWidth / 2;
     startY = simulatedHeight - marginOffset - ( cautionHeight / 2 );
     float cautionWeight = cautionHeight;
-    CautionTape cTapeBottom = new CautionTape( this, fgColor, cautionWeight, startX, startY, cautionWidth, cautionHeight );
+    CautionTape cTapeBottom = new CautionTape( this, fgColor, cautionWeight, startX, startY, cautionWidth, cautionHeight, true, 1.5, 1 );
     cTapeBottom.tweenSequenceRatio = 0.5;
     graphicElements.add( cTapeBottom );
     
     startY = marginOffset + ( cautionHeight / 2 );
-    CautionTape cTapeTop = new CautionTape( this, fgColor, cautionWeight, startX, startY, cautionWidth, cautionHeight );
+    CautionTape cTapeTop = new CautionTape( this, fgColor, cautionWeight, startX, startY, cautionWidth, cautionHeight, true, 1.5, -1 );
     cTapeTop.tweenSequenceRatio = 0.5;
     graphicElements.add( cTapeTop );
     

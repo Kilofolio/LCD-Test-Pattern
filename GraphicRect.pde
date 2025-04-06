@@ -334,7 +334,11 @@ class CautionTape extends SuperGraphicElement {
   float finalStrokeWeight;
   color finalColor;
   
-  int direction;
+  boolean doAnimate = false;
+  float loopTweenTime = 0;
+  float animDirection = 1;
+  
+  //int direction;
   
   float startScale = 0;
   
@@ -346,22 +350,41 @@ class CautionTape extends SuperGraphicElement {
   // graphics
   PShape shapeContainer;
   
+  // animation
+  Ani loopAni;
+  float animStart;
+  float animEnd;
+  
   
   // constructor
   CautionTape( SuperPattern pPattern, color fColor, float lWeight, float pX, float pY, float fWidth, float fHeight ) {
     super( pPattern, pX, pY );
     
+    init( fColor, lWeight, fWidth, fHeight );
+  }
+  
+  CautionTape( SuperPattern pPattern, color fColor, float lWeight, float pX, float pY, float fWidth, float fHeight, boolean doAnimate, float tTime, float animDir ) {
+    super( pPattern, pX, pY );
+    
+    this.doAnimate = doAnimate;
+    this.loopTweenTime = tTime;
+    this.animDirection = animDir;
+    
+    init( fColor, lWeight, fWidth, fHeight );
+  }
+  
+  
+  void init( color fColor, float lWeight, float fWidth, float fHeight ) {
     this.finalColor = fColor;
     this.finalStrokeWeight = lWeight;
     this.finalWidth = this.currentWidth = fWidth;
     this.finalHeight = this.currentHeight = fHeight;
-    this.direction = ( finalWidth > finalHeight ) ? Direction.HORIZONTAL : Direction.VERTICAL;
+    //this.direction = ( finalWidth > finalHeight ) ? Direction.HORIZONTAL : Direction.VERTICAL;
     
-    float fullWidth = finalWidth + ( finalStrokeWeight * 2 );
+    float fullWidth = finalWidth + ( finalStrokeWeight * 4 );
     divisions = ceil( fullWidth / finalStrokeWeight );
     
     shapeContainer = createShape( GROUP );
-    
     
     
     float startAngle = radians( 35 );
@@ -370,8 +393,8 @@ class CautionTape extends SuperGraphicElement {
     float bottomY = finalHeight / 2;
     float offsetX = finalHeight * tan( startAngle );
     
-    float leftBound = -finalWidth / 2;
-    float rightBound = finalWidth / 2;
+    //float leftBound = -finalWidth / 2;
+    //float rightBound = finalWidth / 2;
     
     for( int i = 0; i < divisions; i += 2 ) {
       Point tl = new Point( startX, topY );
@@ -435,6 +458,11 @@ class CautionTape extends SuperGraphicElement {
     //  shapeContainer.addChild( shape );
     //}
     
+    if( doAnimate ) {
+      animStart = ( animDirection > 0 ) ? ( finalWidth / 2 ) + finalStrokeWeight : ( finalWidth / 2 ) - finalStrokeWeight;
+      animEnd = ( animDirection > 0 ) ? ( finalWidth / 2 ) - finalStrokeWeight : ( finalWidth / 2 ) + finalStrokeWeight;
+    }
+    
   }
   
   float getYForAngle( float angle, float x1, float y1, float x2 ) {
@@ -453,11 +481,11 @@ class CautionTape extends SuperGraphicElement {
     //polygon.setFill( colorWithAlpha );
 
     pushMatrix();
-    translate( finalPosX, finalPosY );
+    translate( currentPosX, currentPosY );
     scale( 1, currentScale );
-    if( direction == Direction.VERTICAL ) {
-      rotate( -HALF_PI );
-    }
+    //if( direction == Direction.VERTICAL ) {
+    //  rotate( -HALF_PI );
+    //}
     shape( shapeContainer );
     popMatrix();
   }
@@ -474,6 +502,14 @@ class CautionTape extends SuperGraphicElement {
     currentScale = startScale;
     String propList = "currentAlpha:255,currentScale:1";
     inOutTweenAni = Ani.to( this, tweenTime, delay, propList, Ani.SINE_OUT, this, "onEnd:onShowEnd" );
+    
+    if( doAnimate ) {
+      currentPosX = animStart;
+      loopAni = Ani.to( this, loopTweenTime, "currentPosX", animEnd, Ani.LINEAR );
+      loopAni.repeat();
+      
+      println("CautionTape.show() :: animStart:" + animStart + ", animEnd:" + animEnd);
+    }
   }
   
   void hide( float tTime, float delay ) {    
@@ -483,6 +519,12 @@ class CautionTape extends SuperGraphicElement {
     
     String propList = "currentAlpha:1,currentScale:" + startScale;
     inOutTweenAni = Ani.to( this, tweenTime, delay, propList, Ani.SINE_IN, this, "onEnd:onHideEnd" ); 
+  }
+  
+  void onHideEnd() {    
+    super.onHideEnd();
+    
+    loopAni.end();
   }
   
 }

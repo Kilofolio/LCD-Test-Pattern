@@ -90,7 +90,7 @@ class GraphicPolygon extends SuperGraphicElement {
       currentAngle = normalizeAngle( currentAngle + sideAngle );
       //println( "side: " + i + ", angle: " + currentAngle );
     }
-    println( "---" );
+    //println( "---" );
     
     if( !doFill ) {
       polygon.noFill();

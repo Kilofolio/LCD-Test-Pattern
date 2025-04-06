@@ -175,6 +175,16 @@ void changePattern( int index, float customDelay ) {
   }
 }
 
+void toggleScanlines() {
+  doShowScanlines = !doShowScanlines;
+  
+  if( doShowScanlines) {
+    scanlines.show();
+  } else {
+    scanlines.hide();
+  }
+}
+
 void onAutoTimerComplete() {
   changePattern( activePatternIndex + 1 );
   autoTimer.start();
@@ -192,7 +202,7 @@ void keyPressed() {
     exit();
   }
   if( keyCode == 83 ) {
-    doShowScanlines = !doShowScanlines;
+    toggleScanlines();
   }
   if( !hasBegun ) {
     if( keyCode == 10 ) { // Enter
