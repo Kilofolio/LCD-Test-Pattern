@@ -155,11 +155,11 @@ class GraphicPolygon extends SuperGraphicElement {
       polygon.setStroke( colorWithAlpha );    
     }
     
-    pushMatrix();
-    translate( finalPosX, finalPosY );
-    scale( currentScale );
+    canvas.pushMatrix();
+    canvas.translate( finalPosX, finalPosY );
+    canvas.scale( currentScale );
     canvas.shape( polygon );
-    popMatrix();
+    canvas.popMatrix();
     
     if( hasLabel ) {
       canvas.noStroke();
@@ -169,11 +169,11 @@ class GraphicPolygon extends SuperGraphicElement {
       canvas.textSize( fontSize );
       canvas.textAlign( CENTER, CENTER );
       
-      pushMatrix();
-      translate( textX, textY );
-      rotate( textRot );
+      canvas.pushMatrix();
+      canvas.translate( textX, textY );
+      canvas.rotate( textRot );
       canvas.text( labelText, 0, 0 );
-      popMatrix();
+      canvas.popMatrix();
     }
     
     if( doShowReg ) {

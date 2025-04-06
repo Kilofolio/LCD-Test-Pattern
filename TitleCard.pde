@@ -88,18 +88,18 @@ class TextLabel extends SuperGraphicElement {
   }
   
   void draw() {
-    noStroke();
+    canvas.noStroke();
     
     color textWithAlpha = color( red( finalColor ), green( finalColor ), blue( finalColor ), currentAlpha );
-    fill( textWithAlpha );
-    textFont( font );
-    textSize( textSize );
-    textAlign( CENTER, CENTER );
+    canvas.fill( textWithAlpha );
+    canvas.textFont( font );
+    canvas.textSize( textSize );
+    canvas.textAlign( CENTER, CENTER );
     
-    pushMatrix();
-    translate( finalPosX, finalPosY );
-    text( labelText, 0, 0 );
-    popMatrix();
+    canvas.pushMatrix();
+    canvas.translate( finalPosX, finalPosY );
+    canvas.text( labelText, 0, 0 );
+    canvas.popMatrix();
   }
   
   

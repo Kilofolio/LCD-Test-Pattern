@@ -168,13 +168,13 @@ class ColorBarLabel extends SuperGraphicElement {
     color textColor = barData.textColor;
     color textWithAlpha = color( red( textColor ), green( textColor ), blue( textColor ), currentAlpha );
     canvas.fill( textWithAlpha );
-    pushMatrix();
-    translate( textX, textY );
-    rotate( -HALF_PI );
+    canvas.pushMatrix();
+    canvas.translate( textX, textY );
+    canvas.rotate( -HALF_PI );
     canvas.text( barData.labelText, 0, 0 );
-    popMatrix();
+    canvas.popMatrix();
     
-    noFill();
+    canvas.noFill();
     
   }
   

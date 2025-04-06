@@ -161,11 +161,11 @@ class GraphicRect extends SuperGraphicElement {
       trShape.setStroke( colorWithAlpha ); 
       blShape.setStroke( colorWithAlpha ); 
       brShape.setStroke( colorWithAlpha );
-      pushMatrix();
-      translate( finalPosX, finalPosY );
-      scale( currentScale );
+      canvas.pushMatrix();
+      canvas.translate( finalPosX, finalPosY );
+      canvas.scale( currentScale );
       canvas.shape( cornerShape );
-      popMatrix();
+      canvas.popMatrix();
     }
     
     canvas.noFill();
@@ -415,45 +415,6 @@ class CautionTape extends SuperGraphicElement {
       shapeContainer.addChild( shape );
     }
     
-    //for( int i = 0; i < divisions; i += 2 ) {
-    //  Point tl = new Point( startX, topY );
-    //  Point tr = new Point( startX + finalStrokeWeight, topY );
-    //  Point br = new Point( startX + offsetX + finalStrokeWeight, bottomY );
-    //  Point bl = new Point( startX + offsetX, bottomY );
-      
-    //  PShape shape = createShape();
-    //  shape.beginShape();
-    //  shape.noStroke();
-    //  shape.fill( finalColor );
-    //  // top left
-    //  if( tl.x >= leftBound ) {
-    //    shape.vertex( tl.x, tl.y );
-    //  } else if ( startX > leftBound - finalStrokeWeight ) {
-    //    shape.vertex( leftBound, tl.y );
-    //  }
-    //  // top right
-      
-    //  if( tr.x >= leftBound ) {
-    //    shape.vertex( tr.x, tr.y );
-    //  } else {
-    //    float thisY = getYForAngle( startAngle, br.x, br.y, leftBound );
-    //    shape.vertex( leftBound, thisY );
-    //  }
-    //  // bottom right
-    //  shape.vertex( br.x, br.y );
-    //  // bottom left
-    //  if( bl.x >= leftBound ) {
-    //    shape.vertex(bl.x, bl.y );
-    //  } else {
-        
-    //  }
-      
-    //  shape.endShape( CLOSE );
-      
-    //  startX += finalStrokeWeight * 2;
-    //  shapeContainer.addChild( shape );
-    //}
-    
     if( doAnimate ) {
       animStart = ( animDirection > 0 ) ? ( finalWidth / 2 ) + finalStrokeWeight : ( finalWidth / 2 ) - finalStrokeWeight;
       animEnd = ( animDirection > 0 ) ? ( finalWidth / 2 ) - finalStrokeWeight : ( finalWidth / 2 ) + finalStrokeWeight;
@@ -476,14 +437,14 @@ class CautionTape extends SuperGraphicElement {
 
     //polygon.setFill( colorWithAlpha );
 
-    pushMatrix();
-    translate( currentPosX, currentPosY );
-    scale( 1, currentScale );
+    canvas.pushMatrix();
+    canvas.translate( currentPosX, currentPosY );
+    canvas.scale( 1, currentScale );
     //if( direction == Direction.VERTICAL ) {
     //  rotate( -HALF_PI );
     //}
     canvas.shape( shapeContainer );
-    popMatrix();
+    canvas.popMatrix();
   }
   
   
