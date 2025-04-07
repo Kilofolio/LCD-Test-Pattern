@@ -220,14 +220,14 @@ class Scanlines {
   
   
   // Constructor
-  Scanlines( float lineHeightLight, float lineHeightDark, boolean doAnimate, float tweenTime ) {
+  Scanlines( float lineHeightLight, float alphaLight, float lineHeightDark, float alphaDark, boolean doAnimate, float tweenTime ) {
     this.doAnimate = doAnimate;
     this.tweenTime = tweenTime;
     
     lineHeightInterval = lineHeightLight + lineHeightDark;
     
-    color lightColor = color( 255, 255, 255, 16 );
-    color darkColor = color( 0, 0, 0, 36 );
+    color lightColor = color( 255, 255, 255, alphaLight );
+    color darkColor = color( 0, 0, 0, alphaDark );
     
     // construct graphics
     float numLines = ceil( height / ( lineHeightLight + lineHeightDark ) * 2 );

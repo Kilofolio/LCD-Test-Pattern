@@ -13,7 +13,8 @@ PFont hackBold;
 // components
 TitleCard titleCard;
 ArrayList<SuperPattern> patterns;
-Scanlines scanlines;
+Scanlines scanlinesStandalone;
+Scanlines scanlinesBloom;
 
 // settings
 boolean hasBegun = false;
@@ -41,8 +42,8 @@ PGraphics verticalBlurPass;
 PShader bloomFilter;
 PShader blurFilter;
 
-float luminanceFilter = 0.25;
-float blurSize = 12;
+float luminanceFilter = 0.15;
+float blurSize = 14;
 float sigma = 4;
 
 // auto timer
@@ -67,7 +68,7 @@ void setup() {
     graphicsHeight = height;
   }
   
-  // graphics
+  // graphics & effects
   canvas = createGraphics( graphicsWidth, graphicsHeight );
   
   brightPass = createGraphics( graphicsWidth, graphicsHeight, P2D );
@@ -123,7 +124,13 @@ void setup() {
   
   
   // SCANLINES
-  scanlines = new Scanlines( 6, 2, true, 0.25 );
+  float scanWeightLight = lineWeight * 3;
+  float scanWeightDark = lineWeight;
+  scanlinesStandalone = new Scanlines( scanWeightLight, 16, scanWeightDark, 32, true, 0.35 );
+  
+  //scanWeightLight = lineWeight * 3;
+  //scanWeightDark = ceil( lineWeight * 1.5 );
+  scanlinesBloom = new Scanlines( scanWeightLight, 8, scanWeightDark, 64, true, 0.8 );
   
   titleCard.show( standardShowDelay );
 }
@@ -158,7 +165,9 @@ void draw() {
     
     // scanlines
     if( doShowScanlines ) {
-      scanlines.draw();
+      scanlinesStandalone.draw();
+    } else if ( doShowBloom ) {
+      scanlinesBloom.draw();
     }
     
   canvas.endDraw();
@@ -181,7 +190,7 @@ void draw() {
 
 void drawWithBloom() {
   // source: https://github.com/cansik/processing-bloom-filter
-  
+    
   // bright pass
   brightPass.beginDraw();
   brightPass.shader(bloomFilter);
@@ -249,10 +258,21 @@ void changePattern( int index, float customDelay ) {
 void toggleScanlines() {
   doShowScanlines = !doShowScanlines;
   
-  if( doShowScanlines) {
-    scanlines.show();
+  if( doShowScanlines ) {
+    scanlinesStandalone.show();
+    if( doShowBloom ) {
+      toggleBloom();
+    }
   } else {
-    scanlines.hide();
+    scanlinesStandalone.hide();
+  }
+}
+
+void toggleBloom() {
+  doShowBloom = !doShowBloom;
+  
+  if( doShowBloom && doShowScanlines ) {
+    toggleScanlines();
   }
 }
 
@@ -276,7 +296,7 @@ void keyPressed() {
     toggleScanlines();
   }
   if( keyCode == 66 ) { // B
-    doShowBloom = !doShowBloom;
+    toggleBloom();
   }
   if( !hasBegun ) {
     if( keyCode == 10 ) { // Enter
