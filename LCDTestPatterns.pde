@@ -56,7 +56,8 @@ boolean autoMode = false;
 // Setup
 void setup() {
   size( 1920, 1080, P2D );
-  //fullScreen();
+  //fullScreen( P2D );
+  doScaleGraphics = false;
   
   if( doScaleGraphics ) {
     graphicsWidth = 1440;
@@ -96,10 +97,6 @@ void setup() {
   fontSize = ceil( graphicsHeight / 55 );
   hackRegular = createFont( "fonts/Hack-Regular.ttf", fontSize );
   hackBold = createFont( "fonts/Hack-Bold.ttf", fontSize );
-  
-  // draw settings
-  strokeCap( SQUARE );
-  strokeJoin( MITER );
   
   // graphics
   titleCard = new TitleCard( canvas, graphicsWidth, graphicsHeight, margin, this, hackRegular, highlightColor, bgColor );

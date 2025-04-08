@@ -52,6 +52,8 @@ class GraphicLine extends SuperGraphicElement {
   // draw logic
   void draw() {    
     canvas.noFill();
+    canvas.strokeCap( SQUARE );
+    canvas.strokeJoin( MITER );
     
     color colorWithAlpha = color( red( finalColor ), green( finalColor ), blue( finalColor ), currentAlpha );
     canvas.stroke( colorWithAlpha );    
